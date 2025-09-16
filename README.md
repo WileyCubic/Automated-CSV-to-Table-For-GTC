@@ -1,5 +1,8 @@
 # Automated CSV → Table for Game Time Couture
 
+## All Company and personl information has been removed
+
+
 Convert Squre or Shoppify CSV exports into clean, formatted table with subtotals and grand totals for sharing as an **Excel** report.
 
 This lightweight **ETL** workflow powers GTC's day-to-day reporting by:
