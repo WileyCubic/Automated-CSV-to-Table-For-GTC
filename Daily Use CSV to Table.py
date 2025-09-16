@@ -86,8 +86,8 @@ table = 'temp_table'
 # log processing
 #------------------------------#
 
-log_file = #Add your log file path here
-global_log_file = #Add your global log file path here if applicable
+log_file = input('Add your log file path here:')
+global_log_file = input('Add your global log file path here if applicable:')
 
 #writing both to daily log and global log
 def log(message):
@@ -104,7 +104,7 @@ def log(message):
 #------------------------------#
 
 # Path to input folder
-csv_input_folder = #Add your input folder path here
+csv_input_folder = input('Add your input folder path here:')
 csv_files = glob.glob(csv_input_folder + '/*.csv')
 csv_files
 
