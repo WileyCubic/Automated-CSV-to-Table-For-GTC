@@ -32,7 +32,7 @@ This lightweight **ETL** workflow powers GTC's day-to-day reporting by:
 
 ## Input Expectations
 
-**One of multiple CSV files from either Squre or Shoppify following their standard export format**
+**One or multiple CSV files from either Squre or Shoppify following their export format**
 
 > If your sources are different or uses different headers, the script will not function as intended.
 
