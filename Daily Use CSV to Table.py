@@ -110,7 +110,7 @@ csv_files
 
 # Attribute lists related to input source
 
-squre_attribute_list = [
+square_attribute_list = [
     'Order',
     'Order Name',
     'Order Date',
@@ -235,23 +235,23 @@ shopify_attribute_list = [
 def csv_to_dataframe(files):
     
     # identifying the source of files
-    squre_csv_pattern = r'.*orders-.*'
-    squre_csv_files = [file for file in files if re.search(squre_csv_pattern, file)]
+    square_csv_pattern = r'.*orders-.*'
+    square_csv_files = [file for file in files if re.search(square_csv_pattern, file)]
     shopify_csv_pattern = r'orders_.*'
     shopify_csv_files = [file for file in files if re.search(shopify_csv_pattern, file)]
     
         #processing the files into a single dataframe
         #use error handeling to catch any errors
     try:
-        if len(squre_csv_files) > 0:
-            log(f'Squre csv files found: {squre_csv_files}')
-            # processing the squre files
-            squre_df = pd.DataFrame(columns=squre_attribute_list)
-            for file in squre_csv_files:
+        if len(square_csv_files) > 0:
+            log(f'square csv files found: {square_csv_files}')
+            # processing the square files
+            square_df = pd.DataFrame(columns=square_attribute_list)
+            for file in square_csv_files:
                 temp_df = pd.read_csv(file)
-                squre_df = pd.concat([squre_df, temp_df], ignore_index=True)
-                log(f'Squre dataframe created')
-            return squre_df
+                square_df = pd.concat([square_df, temp_df], ignore_index=True)
+                log(f'square dataframe created')
+            return square_df
         
         if len(shopify_csv_files) > 0:
             log(f'Shopify csv files found: {shopify_csv_files}')    
@@ -264,14 +264,14 @@ def csv_to_dataframe(files):
                 log(f'Shopify dataframe created')
             return shopify_df
         
-        if len(squre_csv_files) == 0 and len(shopify_csv_files) == 0:
+        if len(square_csv_files) == 0 and len(shopify_csv_files) == 0:
             log('No recognizable csv files found')
             print('No recognizable csv files found')
             return ImportError
         
-        if len(squre_csv_files) > 0 and len(shopify_csv_files) > 0:
-            log('Both squre and shopify csv files found')
-            print('Both squre and shopify csv files found, please only input one source at a time')
+        if len(square_csv_files) > 0 and len(shopify_csv_files) > 0:
+            log('Both square and shopify csv files found')
+            print('Both square and shopify csv files found, please only input one source at a time')
             return ImportError
         
     except Exception as e:
@@ -286,8 +286,8 @@ def csv_to_dataframe(files):
 def clean_input_data(df):
     
     #cleaning square data
-    if len(squre_attribute_list) == len(df.columns):
-        log('squre database detected')
+    if len(square_attribute_list) == len(df.columns):
+        log('square database detected')
         
         #drop unneeded columns
         df = df.drop(columns=['Order',
@@ -320,7 +320,7 @@ def clean_input_data(df):
         #formating columns 
         df['Item Quantity'] = df['Item Quantity'].astype(int)
         df = df.replace({np.nan: 'None'})
-        log('squre dataframe cleaned')
+        log('square dataframe cleaned')
         return df
     
     
@@ -447,16 +447,16 @@ def query_sqlite(query):
 
 def create_pivot_table(df):
     #check which df it is
-    #squre df
+    #square df
     if len(df.columns) == 6:
-        log('squre database detected for pivot table creation')
+        log('square database detected for pivot table creation')
         ptable = df.pivot_table(
         index=['Item Name', 'Item Modifiers', 'Item Variation','Order Name'], 
         values=['Item Quantity', 'Item Price'], 
         aggfunc={'Item Quantity': 'sum', 'Item Price': 'first'}).sort_index()
-        log('pivot table created from squre dataframe')
+        log('pivot table created from square dataframe')
         return ptable
-    
+
     #shopify df
     if len(df.columns) == 4:
         log('shopify database detected for pivot table creation')
@@ -473,12 +473,12 @@ def create_pivot_table(df):
 
 def add_subtotals_totals(ptable):
     # check which pivot table it is
-    #squre ptable
+    #square ptable
     
     # this could potentially be refactored to go baised off of the length of the index
     
     if len(ptable.index.names) == 4:
-        log('squre pivot table detected\n Adding in subtotals and grand totals')
+        log('square pivot table detected\n Adding in subtotals and grand totals')
         total_items_sold = ptable['Item Quantity'].values.sum()
         total_price_sold = (ptable['Item Price'].values * ptable['Item Quantity'].values).sum()
         
