@@ -3,7 +3,7 @@
 ## All Company and personl information has been removed
 
 
-Convert Squre or Shoppify CSV exports into clean, formatted table with subtotals and grand totals for sharing as an **Excel** report.
+Convert Square or Shoppify CSV exports into clean, formatted table with subtotals and grand totals for sharing as an **Excel** report.
 
 This lightweight **ETL** workflow powers GTC's day-to-day reporting by:
 1) **Extracting** a CSV export,  
@@ -32,7 +32,7 @@ This lightweight **ETL** workflow powers GTC's day-to-day reporting by:
 
 ## Input Expectations
 
-**One or multiple CSV files from either Squre or Shoppify following their export format**
+**One or multiple CSV files from either Square or Shoppify following their export format**
 
 > If your sources are different or uses different headers, the script will not function as intended.
 
